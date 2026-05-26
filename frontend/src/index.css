@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-brand-500/20 selection:text-brand-700 transition-colors duration-300;
+  }
+  body.dark {
+    @apply bg-slate-950 text-slate-100 selection:bg-brand-500/30 selection:text-brand-200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+/* Premium micro-interactions & utility styles */
+
+.premium-card {
+  @apply bg-white border border-slate-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-premium-hover;
+}
+
+.dark .premium-card {
+  @apply bg-slate-900/60 border-slate-800/80 rounded-2xl p-6 transition-all duration-300 hover:border-slate-700/50 hover:shadow-card-dark;
+}
+
+.premium-input {
+  @apply w-full px-4 py-3 bg-slate-100/50 border border-slate-200/80 rounded-xl focus:outline-none focus:border-brand-500 focus:bg-white transition-all duration-200 text-sm;
+}
+
+.dark .premium-input {
+  @apply w-full px-4 py-3 bg-slate-900/40 border border-slate-800 rounded-xl focus:outline-none focus:border-brand-500 focus:bg-slate-900 transition-all duration-200 text-sm text-white;
+}
+
+.premium-btn-primary {
+  @apply px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2;
+}
+
+.dark .premium-btn-primary {
+  @apply px-5 py-3 bg-white hover:bg-slate-100 text-slate-900 rounded-xl font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2;
+}
+
+.premium-btn-secondary {
+  @apply px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2;
+}
+
+.dark .premium-btn-secondary {
+  @apply px-5 py-3 bg-slate-800 hover:bg-slate-700/80 text-slate-200 rounded-xl font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-slate-800 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-700;
+}
