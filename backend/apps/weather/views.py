@@ -20,15 +20,44 @@ class CurrentWeatherView(APIView):
 
 
 class HyperlocalWeatherView(APIView):
-    """Get hyperlocal weather with precise coordinates."""
+    """Get hyperlocal weather with precise coordinates or resolved city name."""
     permission_classes = [AllowAny]
 
     def get(self, request):
-        lat = float(request.query_params.get('lat', 28.6139))
-        lon = float(request.query_params.get('lon', 77.2090))
-
+        city = request.query_params.get('city')
         service = WeatherService()
+        location_name = None
+
+        if city:
+            locations = service.search_location(city)
+            if locations:
+                loc = locations[0]
+                lat = float(loc.get('lat', 28.6139))
+                lon = float(loc.get('lon', 77.2090))
+                name = loc.get('name', city)
+                country = loc.get('country')
+                state = loc.get('state')
+                if name:
+                    if state and country:
+                        location_name = f"{name}, {state}, {country}"
+                    elif country:
+                        location_name = f"{name}, {country}"
+                    else:
+                        location_name = name
+            else:
+                lat = float(request.query_params.get('lat', 28.6139))
+                lon = float(request.query_params.get('lon', 77.2090))
+        else:
+            lat = float(request.query_params.get('lat', 28.6139))
+            lon = float(request.query_params.get('lon', 77.2090))
+
         weather = service.get_current_weather(lat, lon)
+        
+        if location_name and isinstance(weather, dict):
+            weather['location_name'] = location_name
+        elif city and isinstance(weather, dict) and not weather.get('location_name'):
+            weather['location_name'] = city
+
         aqi = service.get_air_quality(lat, lon)
 
         data = {
